@@ -114,7 +114,7 @@ jobs:
         publish-changes: true
 
   release-to-staging:
-    needs: [ convert-to-managed ]
+    needs: [ release-to-sit ]
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
@@ -140,12 +140,13 @@ jobs:
         force-overwrite: true
         publish-changes: true
 
-
   release-to-prod:
-    needs: [ convert-to-managed ]
+    needs: [ release-to-staging ]
     runs-on: windows-latest
+    approvers: artagameaba
     env:
       RUNNER_DEBUG: 1
+    environment: prod
 
     steps:
     - uses: actions/checkout@v2
