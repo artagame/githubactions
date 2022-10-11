@@ -143,7 +143,6 @@ jobs:
   release-to-prod:
     needs: [ release-to-staging ]
     runs-on: windows-latest
-    approvers: artagameaba
     env:
       RUNNER_DEBUG: 1
     environment: prod
