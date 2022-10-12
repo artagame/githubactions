@@ -27,32 +27,17 @@ on:
        required: true
        default: solutions/
        type: string
-    secrets:
-      ENVIRONMENT_URL:
-        description: 'environment url'
-        required: true
-      CLIENT_ID:
-        description: 'client id'
-        required: true
-      TENANT_ID: 
-        description: 'tenant id'
-        required: true
-      CLIENT_SECRET:
-        description: 'client secret'
-        required: true
         
-# env:
-# #edit your values here
-#   ENVIRONMENT_URL: '<ENVIRONMENTURL>'
-#   CLIENT_ID: '<APPID>'
-#   TENANT_ID: '<TENANT ID>'
-
 jobs:
   export-from-dev:
     runs-on: windows-latest
     # or you can say runs-on: ubuntu-latest
     env:
       RUNNER_DEBUG: 1
+      DEV_ENVIRONMENT_URL: ${{ secrets.DEV_ENVIRONMENT_URL }}
+      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
 
     steps:
     - uses: actions/checkout@v2
