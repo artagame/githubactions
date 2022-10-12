@@ -41,7 +41,7 @@ jobs:
       with:
         lfs: true
     - name: Run a one-line script
-      run: echo $test
+      run: echo ${{ env.test }}
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
