@@ -30,18 +30,16 @@ on:
         
 jobs:
   export-from-dev:
+    environment: dev    
     runs-on: ubuntu-latest
     # or you can say runs-on: ubuntu-latest
-    environment: dev    
-    env:
-      RUNNER_DEBUG: 1
     steps:
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
         env:
-          test: "${{ secrets.ENVIRONMENT_URL }}"
+          test: ${{ secrets.ENVIRONMENT_URL }}
         run: echo ${{env.test}}
       
       - name: who-am-i action
