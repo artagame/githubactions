@@ -58,7 +58,7 @@ on:
 
 jobs:
   build:
-    uses: artagame/githubactions/.github/workflows/build@main
+    uses: artagame/githubactions/.github/workflows/build.yml@main
     with:
       solution_name:  ${{ github.event.inputs.solution_name }}
       solution_exported_folder: ${{ github.event.inputs.solution_exported_folder }}
