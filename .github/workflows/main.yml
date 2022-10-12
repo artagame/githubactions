@@ -64,12 +64,12 @@ env:
 
 
 jobs:
-call-ci:
-    uses: artagame/githubactions/.github/workflows/export-and-branch-solution-with-spn-auth.yml@main
-    with:
-      solution_name: TestName
+  call-ci:
+      uses: artagame/githubactions/.github/workflows/export-and-branch-solution-with-spn-auth.yml@main
+      with:
+        solution_name: TestName
 
-call-cd:
-    uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
-    with:
-      solution_name: TestName
+  call-cd:
+      uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
+      with:
+        solution_name: TestName
