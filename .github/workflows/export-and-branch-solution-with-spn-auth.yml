@@ -3,13 +3,25 @@ name: export-and-branch-solution
 #  unpack it and prepare, commit and push a git branch with the changes
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       # Change this value
       solution_name:
         description: 'name of the solution to worked on from Power Platform'
         required: true
         default: ALMLab
+      ENVIRONMENT_URL:
+        description: 'environment url'
+        required: true
+        default: testurl
+      CLIENT_ID:
+        description: 'environment url'
+        required: true
+        default: clientid
+      TENANT_ID: 
+        description: 'environment url'
+        required: true
+        default: tenantid
        #Do Not change these values
       solution_exported_folder:
         description: 'folder name for staging the exported solution *do not change*'
@@ -23,11 +35,11 @@ on:
        description: 'folder name to be created and checked in *do not change*'
        required: true
        default: solutions/
-env:
-#edit your values here
-  ENVIRONMENT_URL: '<ENVIRONMENTURL>'
-  CLIENT_ID: '<APPID>'
-  TENANT_ID: '<TENANT ID>'
+# env:
+# #edit your values here
+#   ENVIRONMENT_URL: '<ENVIRONMENTURL>'
+#   CLIENT_ID: '<APPID>'
+#   TENANT_ID: '<TENANT ID>'
 
 jobs:
   export-from-dev:

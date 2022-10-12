@@ -4,7 +4,7 @@ name: release-solution-to-prod-spn
 #   upload the solution to the GitHub artifacts and deploy to the PROD environment
 
 on:
-  workflow_dispatch:
+  workflow_call :
     inputs:
       # Change this value
       solution_name:
@@ -12,6 +12,22 @@ on:
         required: true
         default: ALMLab
        #Do Not change these values
+      BUILD_ENVIRONMENT_URL:
+        description: 'environment url'
+        required: true
+        default: testurl
+      PRODUCTION_ENVIRONMENT_URL:
+        description: 'environment url'
+        required: true
+        default: testurl
+      CLIENT_ID:
+        description: 'environment url'
+        required: true
+        default: clientid
+      TENANT_ID: 
+        description: 'environment url'
+        required: true
+        default: tenantid
       solution_shipping_folder:
         description: 'folder name for staging the exported solution *do not change*'
         required: true
@@ -32,12 +48,12 @@ on:
     types: [created]
   
 
-env:
-#edit your values here
-  BUILD_ENVIRONMENT_URL: '<BUILDENVIRONMENTURL>'
-  PRODUCTION_ENVIRONMENT_URL: '<PRODENVIRONMENTURL>'
-  CLIENT_ID: '<APPID>'
-  TENANT_ID: '<TENANT ID>'
+# env:
+# #edit your values here
+#   BUILD_ENVIRONMENT_URL: '<BUILDENVIRONMENTURL>'
+#   PRODUCTION_ENVIRONMENT_URL: '<PRODENVIRONMENTURL>'
+#   CLIENT_ID: '<APPID>'
+#   TENANT_ID: '<TENANT ID>'
 
 jobs:
   convert-to-managed:
