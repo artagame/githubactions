@@ -9,24 +9,6 @@ on:
     branches: [ "main" ]
     
   workflow_dispatch:
-    inputs:
-      # Change this value
-      solution_name: ALMLab
-       #Do Not change these values
-       #Export solution inputs
-      #=============================================================================
-      solution_exported_folder: out/exported/
-      solution_folder: out/solutions/
-      solution_target_folder: solutions/
-      #=============================================================================
-      #Do Not change these values
-       #Import solution inputs
-      #=============================================================================
-      solution_shipping_folder: out/ship/
-      solution_outbound_folder: out/solutions/
-      solution_source_folder: solutions/
-      solution_release_folder: out/release
-      #=============================================================================
 
   release:
     types: [created]
@@ -36,10 +18,10 @@ jobs:
   build:
     uses: artagame/githubactions/.github/workflows/build.yml@main
     with:
-      solution_name:  ${{ github.event.inputs.solution_name }}
-      solution_exported_folder: ${{ github.event.inputs.solution_exported_folder }}
-      solution_folder: ${{ github.event.inputs.solution_folder }}
-      solution_target_folder: ${{ github.event.inputs.solution_target_folder }}
+      solution_name:  ALMLab
+      solution_exported_folder: out/exported/
+      solution_folder: out/solutions/
+      solution_target_folder: solutions/
     secrets:
       ENVIRONMENT_URL: ${{ secrets.BUILD_ENVIRONMENT_URL }}
       CLIENT_ID: ${{ secrets.BUILD_CLIENT_ID }}
@@ -51,11 +33,11 @@ jobs:
     needs: [ build ]
     uses: artagame/githubactions/.github/workflows/release.yml@main
     with:
-      solution_name:  ${{ github.event.inputs.solution_name }}
-      solution_shipping_folder: ${{ github.event.inputs.solution_shipping_folder }}
-      solution_outbound_folder: ${{ github.event.inputs.solution_outbound_folder }}
-      solution_source_folder: ${{ github.event.inputs.solution_source_folder }}
-      solution_release_folder: ${{ github.event.inputs.solution_release_folder }}
+      solution_name:  ALMLab
+      solution_shipping_folder: out/ship/
+      solution_outbound_folder: out/solutions/
+      solution_source_folder: solutions/
+      solution_release_folder: out/release
     secrets:
       BUILD_ENVIRONMENT_URL: ${{ secrets.BUILD_ENVIRONMENT_URL }}
       BUILD_CLIENT_ID: ${{ secrets.BUILD_CLIENT_ID }}
