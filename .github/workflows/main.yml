@@ -67,9 +67,9 @@ jobs:
       uses: artagame/githubactions/.github/workflows/export-and-branch-solution-with-spn-auth.yml@main
       with:
         solution_name:  ${{ github.event.inputs.solution_name }}
-        ENVIRONMENT_URL:  ${{env.BUILD_ENVIRONMENT_URL}}
-        CLIENT_ID:  ${{env.CLIENT_ID}}
-        TENANT_ID:  ${{env.TENANT_ID}}
+        ENVIRONMENT_URL:  ${{ env.BUILD_ENVIRONMENT_URL }}
+        CLIENT_ID:  ${{ env.CLIENT_ID }}
+        TENANT_ID: ${{ env.TENANT_ID }}
         solution_exported_folder: ${{ github.event.inputs.solution_exported_folder }}
         solution_folder: ${{ github.event.inputs.solution_folder }}
         solution_target_folder: ${{ github.event.inputs.solution_target_folder }}
@@ -79,10 +79,10 @@ jobs:
       uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
       with:
         solution_name:  ${{ github.event.inputs.solution_name }}
-        BUILD_ENVIRONMENT_URL:  ${{env.BUILD_ENVIRONMENT_URL}}
-        PRODUCTION_ENVIRONMENT_URL:  ${{env.BUILD_ENVIRONMENT_URL}}
-        CLIENT_ID:  ${{env.CLIENT_ID}}
-        TENANT_ID:  ${{env.TENANT_ID}}
+        BUILD_ENVIRONMENT_URL:  ${{ env.BUILD_ENVIRONMENT_URL }}
+        PRODUCTION_ENVIRONMENT_URL:  ${{ env.PRODUCTION_ENVIRONMENT_URL }}
+        CLIENT_ID:  ${{ env.CLIENT_ID }}
+        TENANT_ID: ${{ env.TENANT_ID }}
         solution_shipping_folder: ${{ github.event.inputs.solution_shipping_folder }}
         solution_outbound_folder: ${{ github.event.inputs.solution_outbound_folder }}
         solution_source_folder: ${{ github.event.inputs.solution_source_folder }}
