@@ -41,7 +41,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo ${{ secrets.ENVIRONMENT_URL }}
+        env:
+          test: ${{ secrets.ENVIRONMENT_URL }}
+        run: echo ${{env.test}}
       
       - name: who-am-i action
         uses: microsoft/powerplatform-actions/who-am-i@v0
