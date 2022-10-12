@@ -11,45 +11,21 @@ on:
   workflow_dispatch:
     inputs:
       # Change this value
-      solution_name:
-        description: 'name of the solution to worked on from Power Platform'
-        required: true
-        default: ALMLab
+      solution_name: ALMLab
        #Do Not change these values
        #Export solution inputs
       #=============================================================================
-      solution_exported_folder:
-        description: 'folder name for staging the exported solution *do not change*'
-        required: true
-        default: out/exported/
-      solution_folder:
-        description: 'staging the unpacked solution folder before check-in *do not change*'
-        required: true
-        default: out/solutions/
-      solution_target_folder: 
-       description: 'folder name to be created and checked in *do not change*'
-       required: true
-       default: solutions/
+      solution_exported_folder: out/exported/
+      solution_folder: out/solutions/
+      solution_target_folder: solutions/
       #=============================================================================
       #Do Not change these values
        #Import solution inputs
       #=============================================================================
-      solution_shipping_folder:
-        description: 'folder name for staging the exported solution *do not change*'
-        required: true
-        default: out/ship/
-      solution_outbound_folder:
-        description: 'staging the unpacked solution folder before check-in *do not change*'
-        required: true
-        default: out/solutions/
-      solution_source_folder: 
-       description: 'folder name to be created and checked in *do not change*'
-       required: true
-       default: solutions/
-      solution_release_folder:
-       description: 'folder where the released binaries are going to be hosted *do not change*'
-       required: true
-       default: out/release
+      solution_shipping_folder: out/ship/
+      solution_outbound_folder: out/solutions/
+      solution_source_folder: solutions/
+      solution_release_folder: out/release
       #=============================================================================
 
   release:
