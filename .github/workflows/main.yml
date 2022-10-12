@@ -70,7 +70,7 @@ jobs:
         solution_name: TestName
 
   release:
-      needs: [ convert-to-managed ]
+      needs: [ build ]
       uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
       with:
         solution_name: TestName
