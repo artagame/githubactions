@@ -26,7 +26,7 @@ on:
        description: 'folder name to be created and checked in *do not change*'
        required: true
        default: solutions/
-      type: string
+       type: string
     secrets:
       ENVIRONMENT_URL:
         description: 'environment url'

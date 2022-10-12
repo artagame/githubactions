@@ -179,7 +179,6 @@ jobs:
       TENANT_ID: ${{ secrets.UAT_TENANT_ID }}
       CLIENT_SECRET: ${{ secrets.UAT_CLIENT_SECRET }}
 
-
   prod:
     needs: [ uat ]
     runs-on: windows-latest
