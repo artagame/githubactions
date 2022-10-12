@@ -149,7 +149,7 @@ jobs:
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
-    uses: artagame/githubactions/.github/workflows/release-solution@main
+    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
     with:
       solution_name:  ${{ github.event.inputs.solution_name }}
       solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
@@ -164,7 +164,7 @@ jobs:
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
-    uses: artagame/githubactions/.github/workflows/release-solution@main
+    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
     with:
       solution_name:  ${{ github.event.inputs.solution_name }}
       solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
@@ -181,7 +181,7 @@ jobs:
     env:
       RUNNER_DEBUG: 1
     environment: prod
-    uses: artagame/githubactions/.github/workflows/release-solution@main
+    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
     with:
       solution_name:  ${{ github.event.inputs.solution_name }}
       solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
