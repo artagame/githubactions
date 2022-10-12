@@ -41,12 +41,9 @@ jobs:
   convert-to-managed:
     runs-on: windows-latest
     # or you can say runs-on: ubuntu-latest
+    environment: build
     env:
       RUNNER_DEBUG: 1
-      BUILD_ENVIRONMENT_URL: ${{ secrets.BUILD_ENVIRONMENT_URL }}
-      BUILD_CLIENT_ID: ${{ secrets.BUILD_CLIENT_ID }}
-      BUILD_TENANT_ID: ${{ secrets.BUILD_TENANT_ID }}
-      BUILD_CLIENT_SECRET: ${{ secrets.BUILD_CLIENT_SECRET }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -62,10 +59,10 @@ jobs:
     - name: Import solution as unmanaged to build env
       uses: microsoft/powerplatform-actions/import-solution@v0
       with:
-        environment-url: ${{ secrets.BUILD_ENVIRONMENT_URL }}
-        app-id: ${{ secrets.BUILD_CLIENT_ID }}
-        client-secret: ${{ secrets.BUILD_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.BUILD_TENANT_ID }}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-file: ${{ github.event.inputs.solution_outbound_folder}}/${{ github.event.inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
@@ -73,10 +70,10 @@ jobs:
     - name: Export solution as managed
       uses: microsoft/powerplatform-actions/export-solution@v0
       with:
-        environment-url: ${{ secrets.BUILD_ENVIRONMENT_URL }}
-        app-id: ${{ secrets.BUILD_CLIENT_ID }}
-        client-secret: ${{ secrets.BUILD_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.BUILD_TENANT_ID }}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-name: ${{ github.event.inputs.solution_name }}
         managed: true
         solution-output-file: ${{ github.event.inputs.solution_shipping_folder}}/${{ github.event.inputs.solution_name }}.zip
@@ -90,12 +87,9 @@ jobs:
   sit:
     needs: [ convert-to-managed ]
     runs-on: windows-latest
+    environment: sit
     env:
       RUNNER_DEBUG: 1
-      SIT_ENVIRONMENT_URL: ${{ secrets.SIT_ENVIRONMENT_URL }}
-      SIT_CLIENT_ID: ${{ secrets.SIT_CLIENT_ID }}
-      SIT_TENANT_ID: ${{ secrets.SIT_TENANT_ID }}
-      SIT_CLIENT_SECRET: ${{ secrets.SIT_CLIENT_SECRET }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -109,10 +103,10 @@ jobs:
     - name: Import solution to env
       uses: microsoft/powerplatform-actions/import-solution@v0
       with:
-        environment-url: ${{ secrets.SIT_ENVIRONMENT_URL }}
-        app-id: ${{ secrets.SIT_CLIENT_ID }}
-        client-secret: ${{ secrets.SIT_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.SIT_TENANT_ID }}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
@@ -120,12 +114,9 @@ jobs:
   uat:
     needs: [ sit ]
     runs-on: windows-latest
+    environment: uat
     env:
       RUNNER_DEBUG: 1
-      UAT_ENVIRONMENT_URL: ${{ secrets.UAT_ENVIRONMENT_URL }}
-      UAT_CLIENT_ID: ${{ secrets.UAT_CLIENT_ID }}
-      UAT_TENANT_ID: ${{ secrets.UAT_TENANT_ID }}
-      UAT_CLIENT_SECRET: ${{ secrets.UAT_CLIENT_SECRET }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -139,10 +130,10 @@ jobs:
     - name: Import solution to env
       uses: microsoft/powerplatform-actions/import-solution@v0
       with:
-        environment-url: ${{ secrets.UAT_ENVIRONMENT_URL }}
-        app-id: ${{ secrets.UAT_CLIENT_ID }}
-        client-secret: ${{ secrets.UAT_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.UAT_TENANT_ID }}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
@@ -152,10 +143,6 @@ jobs:
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
-      PROD_ENVIRONMENT_URL: ${{ secrets.PROD_ENVIRONMENT_URL }}
-      PROD_CLIENT_ID: ${{ secrets.PROD_CLIENT_ID }}
-      PROD_TENANT_ID: ${{ secrets.PROD_TENANT_ID }}
-      PROD_CLIENT_SECRET: ${{ secrets.PROD_CLIENT_SECRET }}      
     environment: prod
     steps:
     - uses: actions/checkout@v2
@@ -170,10 +157,10 @@ jobs:
     - name: Import solution to env
       uses: microsoft/powerplatform-actions/import-solution@v0
       with:
-        environment-url: ${{ secrets.PROD_ENVIRONMENT_URL }}
-        app-id: ${{ secrets.PROD_CLIENT_ID }}
-        client-secret: ${{ secrets.PROD_CLIENT_SECRET }}
-        tenant-id: ${{ secrets.PROD_TENANT_ID }}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true

@@ -32,18 +32,15 @@ jobs:
   export-from-dev:
     runs-on: windows-latest
     # or you can say runs-on: ubuntu-latest
+    environment: dev
     env:
       RUNNER_DEBUG: 1
-      DEV_ENVIRONMENT_URL: ${{ secrets.DEV_ENVIRONMENT_URL }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-
     steps:
     - uses: actions/checkout@v2
       with:
         lfs: true
-
+    - name: Run a one-line script
+      run: echo ${{ secrets.ENVIRONMENT_URL }}
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
