@@ -42,10 +42,10 @@ jobs:
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
-        environment-url: ${{ secrets.ENVIRONMENT_URL }}
-        app-id: ${{ secrets.CLIENT_ID }}
-        client-secret: ${{ secrets.CLIENT_SECRET }}
-        tenant-id: ${{ secrets.TENANT_ID }}
+        environment-url: https://org631e1075.crm.dynamics.com
+        app-id: 880663a1-45f9-447c-a03d-6256e6841944
+        client-secret: jrT8Q~pIsafPlREdZArbejvDZnyy5QOg6dU2gbFV
+        tenant-id: 86d1af64-93aa-4af8-a3be-e529ba412c55
 
     - name: export-solution action
       uses: microsoft/powerplatform-actions/export-solution@v0
