@@ -30,7 +30,7 @@ on:
         
 jobs:
   export-from-dev:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     # or you can say runs-on: ubuntu-latest
     environment:
       name: dev    
