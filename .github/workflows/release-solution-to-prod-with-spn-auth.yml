@@ -130,7 +130,7 @@ jobs:
         publish-changes: true
 
   uat:
-    needs: [ release-to-sit ]
+    needs: [ sit ]
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
@@ -157,7 +157,7 @@ jobs:
         publish-changes: true
 
   prod:
-    needs: [ release-to-staging ]
+    needs: [ uat ]
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
