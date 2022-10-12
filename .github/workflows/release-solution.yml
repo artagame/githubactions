@@ -32,7 +32,7 @@ on:
         default: clientsecret
 
 jobs:
-  release:
+  import-solution:
     steps:
     - uses: actions/checkout@v2
       with:
