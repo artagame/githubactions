@@ -43,7 +43,7 @@ on:
       UAT_ENVIRONMENT_URL:
         description: 'uat env url'
         required: true
-      PRODUCTION_ENVIRONMENT_URL:
+      PROD_ENVIRONMENT_URL:
         description: 'prod env url'
         required: true
       BUILD_CLIENT_ID:
