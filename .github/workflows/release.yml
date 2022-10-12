@@ -37,67 +37,51 @@ on:
       BUILD_ENVIRONMENT_URL:
         description: 'build env url'
         required: true
-        default: testurl
       SIT_ENVIRONMENT_URL:
         description: 'sit env url'
         required: true
-        default: testurl
       UAT_ENVIRONMENT_URL:
         description: 'uat env url'
         required: true
-        default: testurl
       PRODUCTION_ENVIRONMENT_URL:
         description: 'prod env url'
         required: true
-        default: testurl
       BUILD_CLIENT_ID:
         description: 'client id'
         required: true
-        default: clientid
       BUILD_TENANT_ID: 
         description: 'tenant id'
         required: true
-        default: tenantid
       BUILD_CLIENT_SECRET:
         description: 'client secret'
         required: true
-        default: clientsecret
       SIT_CLIENT_ID:
         description: 'client id'
         required: true
-        default: clientid
       SIT_TENANT_ID: 
         description: 'tenant id'
         required: true
-        default: tenantid
       SIT_CLIENT_SECRET:
         description: 'client secret'
         required: true
-        default: clientsecret
       UAT_CLIENT_ID:
         description: 'client id'
         required: true
-        default: clientid
       UAT_TENANT_ID: 
         description: 'tenant id'
         required: true
-        default: tenantid
       UAT_CLIENT_SECRET:
         description: 'client secret'
         required: true
-        default: clientsecret
       PROD_CLIENT_ID:
         description: 'client id'
         required: true
-        default: clientid
       PROD_TENANT_ID: 
         description: 'tenant id'
         required: true
-        default: tenantid
       PROD_CLIENT_SECRET:
         description: 'client secret'
         required: true
-        default: clientsecret
 
   release:
     types: [created]
