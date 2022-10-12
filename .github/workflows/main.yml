@@ -67,10 +67,12 @@ jobs:
   build:
       uses: artagame/githubactions/.github/workflows/export-and-branch-solution-with-spn-auth.yml@main
       with:
-        solution_name: TestName
+        #You can specify the solution name here
+        solution_name: ALMLab
 
   release:
       needs: [ build ]
       uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
       with:
-        solution_name: TestName
+        #You can specify the solution name here
+        solution_name: ALMLab
