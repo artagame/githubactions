@@ -138,30 +138,53 @@ jobs:
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
-    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
-    with:
-      solution_name:  ${{ github.event.inputs.solution_name }}
-      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
-    secrets:
-      ENVIRONMENT_URL: ${{ secrets.SIT_ENVIRONMENT_URL }}
-      CLIENT_ID: ${{ secrets.SIT_CLIENT_ID }}
-      TENANT_ID: ${{ secrets.SIT_TENANT_ID }}
-      CLIENT_SECRET: ${{ secrets.SIT_CLIENT_SECRET }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+
+    - name: Fetch the ready to ship solution from GH artifact store
+      uses: actions/download-artifact@v2
+      with:
+        name: managedSolutions
+        path: ${{ inputs.solution_release_folder}}
+    - name: Import solution to env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: ${{ secrets.SIT_ENVIRONMENT_URL }}
+        app-id: ${{ secrets.SIT_CLIENT_ID }}
+        client-secret: ${{ secrets.SIT_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.SIT_TENANT_ID }}
+        solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true
 
   uat:
     needs: [ sit ]
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
-    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
-    with:
-      solution_name:  ${{ github.event.inputs.solution_name }}
-      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
-    secrets:
-      ENVIRONMENT_URL: ${{ secrets.UAT_ENVIRONMENT_URL }}
-      CLIENT_ID: ${{ secrets.UAT_CLIENT_ID }}
-      TENANT_ID: ${{ secrets.UAT_TENANT_ID }}
-      CLIENT_SECRET: ${{ secrets.UAT_CLIENT_SECRET }}
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+
+    - name: Fetch the ready to ship solution from GH artifact store
+      uses: actions/download-artifact@v2
+      with:
+        name: managedSolutions
+        path: ${{ inputs.solution_release_folder}}
+    - name: Import solution to env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: ${{ secrets.UAT_ENVIRONMENT_URL }}
+        app-id: ${{ secrets.UAT_CLIENT_ID }}
+        client-secret: ${{ secrets.UAT_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.UAT_TENANT_ID }}
+        solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true
+
 
   prod:
     needs: [ uat ]
@@ -169,13 +192,25 @@ jobs:
     env:
       RUNNER_DEBUG: 1
     environment: prod
-    uses: artagame/githubactions/.github/workflows/release-solution.yml@main
-    with:
-      solution_name:  ${{ github.event.inputs.solution_name }}
-      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
-    secrets:
-      ENVIRONMENT_URL: ${{ secrets.PROD_ENVIRONMENT_URL }}
-      CLIENT_ID: ${{ secrets.PROD_CLIENT_ID }}
-      TENANT_ID: ${{ secrets.PROD_TENANT_ID }}
-      CLIENT_SECRET: ${{ secrets.PROD_CLIENT_SECRET }}
-  
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+
+    - name: Fetch the ready to ship solution from GH artifact store
+      uses: actions/download-artifact@v2
+      with:
+        name: managedSolutions
+        path: ${{ inputs.solution_release_folder}}
+    - name: Import solution to env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: ${{ secrets.PROD_ENVIRONMENT_URL }}
+        app-id: ${{ secrets.PROD_CLIENT_ID }}
+        client-secret: ${{ secrets.PROD_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.PROD_TENANT_ID }}
+        solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true
+
+
