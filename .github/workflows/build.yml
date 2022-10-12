@@ -10,18 +10,6 @@ on:
         description: 'name of the solution to worked on from Power Platform'
         required: true
         default: ALMLab
-      ENVIRONMENT_URL:
-        description: 'environment url'
-        required: true
-        default: testurl
-      CLIENT_ID:
-        description: 'environment url'
-        required: true
-        default: clientid
-      TENANT_ID: 
-        description: 'environment url'
-        required: true
-        default: tenantid
        #Do Not change these values
       solution_exported_folder:
         description: 'folder name for staging the exported solution *do not change*'
@@ -35,6 +23,24 @@ on:
        description: 'folder name to be created and checked in *do not change*'
        required: true
        default: solutions/
+    secrets:
+      ENVIRONMENT_URL:
+        description: 'environment url'
+        required: true
+        default: testurl
+      CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      CLIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+        
 # env:
 # #edit your values here
 #   ENVIRONMENT_URL: '<ENVIRONMENTURL>'
@@ -56,19 +62,18 @@ jobs:
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v0
       with:
-        environment-url: ${{ github.event.inputs.ENVIRONMENT_URL}}
-        app-id: ${{ github.event.inputs.CLIENT_ID}}
-        client-secret: ${{ secrets.PowerPlatformSPN }}
-        tenant-id: ${{ github.event.inputs.TENANT_ID}}
-
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
 
     - name: export-solution action
       uses: microsoft/powerplatform-actions/export-solution@v0
       with:
-        environment-url: ${{ github.event.inputs.ENVIRONMENT_URL}}
-        app-id: ${{ github.event.inputs.CLIENT_ID}}
-        client-secret: ${{ secrets.PowerPlatformSPN }}
-        tenant-id: ${{ github.event.inputs.TENANT_ID}}
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
         solution-name: ${{ github.event.inputs.solution_name }}
         solution-output-file: ${{ github.event.inputs.solution_exported_folder}}/${{ github.event.inputs.solution_name }}.zip
 

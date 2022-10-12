@@ -1,0 +1,193 @@
+name: release-solution-to-prod-spn
+# prepare for releasing to prod:
+#   convert solution to managed (using a build PowerPlatform environment for the conversion)
+#   upload the solution to the GitHub artifacts and deploy to the PROD environment
+
+on:
+  workflow_call :
+    inputs:
+      # Change this value
+      solution_name:
+        description: 'name of the solution to worked on from Power Platform'
+        required: true
+        default: ALMLab
+      #Do Not change these values
+      solution_shipping_folder:
+        description: 'folder name for staging the exported solution *do not change*'
+        required: true
+        default: out/ship/
+      solution_outbound_folder:
+        description: 'staging the unpacked solution folder before check-in *do not change*'
+        required: true
+        default: out/solutions/
+      solution_source_folder: 
+       description: 'folder name to be created and checked in *do not change*'
+       required: true
+       default: solutions/
+      solution_release_folder:
+       description: 'folder where the released binaries are going to be hosted *do not change*'
+       required: true
+       default: out/release
+    secrets:
+      BUILD_ENVIRONMENT_URL:
+        description: 'build env url'
+        required: true
+        default: testurl
+      SIT_ENVIRONMENT_URL:
+        description: 'sit env url'
+        required: true
+        default: testurl
+      UAT_ENVIRONMENT_URL:
+        description: 'uat env url'
+        required: true
+        default: testurl
+      PRODUCTION_ENVIRONMENT_URL:
+        description: 'prod env url'
+        required: true
+        default: testurl
+      BUILD_CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      BUILD_TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      BUILD_CLIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+      SIT_CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      SIT_TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      SIT_CLIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+      UAT_CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      UAT_TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      UAT_CLIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+      PROD_CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      PROD_TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      PROD_CLIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+
+  release:
+    types: [created]
+  
+jobs:
+  convert-to-managed:
+    runs-on: windows-latest
+    # or you can say runs-on: ubuntu-latest
+    env:
+      RUNNER_DEBUG: 1
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+
+    - name: Pack solution
+      uses: microsoft/powerplatform-actions/pack-solution@v0
+      with:
+        solution-folder: ${{ github.event.inputs.solution_source_folder}}/${{ github.event.inputs.solution_name }}
+        solution-file: ${{ github.event.inputs.solution_outbound_folder}}/${{ github.event.inputs.solution_name }}.zip
+        solution-type: Unmanaged
+
+    - name: Import solution as unmanaged to build env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: ${{ secrets.BUILD_ENVIRONMENT_URL }}
+        app-id: ${{ secrets.BUILD_CLIENT_ID }}
+        client-secret: ${{ secrets.BUILD_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.BUILD_TENANT_ID }}
+        solution-file: ${{ github.event.inputs.solution_outbound_folder}}/${{ github.event.inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true
+
+    - name: Export solution as managed
+      uses: microsoft/powerplatform-actions/export-solution@v0
+      with:
+        environment-url: ${{ secrets.BUILD_ENVIRONMENT_URL }}
+        app-id: ${{ secrets.BUILD_CLIENT_ID }}
+        client-secret: ${{ secrets.BUILD_CLIENT_SECRET }}
+        tenant-id: ${{ secrets.BUILD_TENANT_ID }}
+        solution-name: ${{ github.event.inputs.solution_name }}
+        managed: true
+        solution-output-file: ${{ github.event.inputs.solution_shipping_folder}}/${{ github.event.inputs.solution_name }}.zip
+
+    - name: Upload the ready to ship solution to GH artifact store
+      uses: actions/upload-artifact@v2
+      with:
+        name: managedSolutions
+        path: ${{ github.event.inputs.solution_shipping_folder}}/${{ github.event.inputs.solution_name }}.zip
+
+  sit:
+    needs: [ convert-to-managed ]
+    runs-on: windows-latest
+    env:
+      RUNNER_DEBUG: 1
+    uses: artagame/githubactions/.github/workflows/release-solution@main
+    with:
+      solution_name:  ${{ github.event.inputs.solution_name }}
+      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
+    secrets:
+      ENVIRONMENT_URL: ${{ secrets.SIT_ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.SIT_CLIENT_ID }}
+      TENANT_ID: ${{ secrets.SIT_TENANT_ID }}
+      CLIENT_SECRET: ${{ secrets.SIT_CLIENT_SECRET }}
+
+  uat:
+    needs: [ sit ]
+    runs-on: windows-latest
+    env:
+      RUNNER_DEBUG: 1
+    uses: artagame/githubactions/.github/workflows/release-solution@main
+    with:
+      solution_name:  ${{ github.event.inputs.solution_name }}
+      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
+    secrets:
+      ENVIRONMENT_URL: ${{ secrets.UAT_ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.UAT_CLIENT_ID }}
+      TENANT_ID: ${{ secrets.UAT_TENANT_ID }}
+      CLIENT_SECRET: ${{ secrets.UAT_CLIENT_SECRET }}
+
+
+  prod:
+    needs: [ uat ]
+    runs-on: windows-latest
+    env:
+      RUNNER_DEBUG: 1
+    environment: prod
+    uses: artagame/githubactions/.github/workflows/release-solution@main
+    with:
+      solution_name:  ${{ github.event.inputs.solution_name }}
+      solution_release_folder: ${{ github.event.inputs.ssolution_release_folder }}
+    secrets:
+      ENVIRONMENT_URL: ${{ secrets.PROD_ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.PROD_CLIENT_ID }}
+      TENANT_ID: ${{ secrets.PROD_TENANT_ID }}
+      CLIENT_SECRET: ${{ secrets.PROD_CLIENT_SECRET }}
+  

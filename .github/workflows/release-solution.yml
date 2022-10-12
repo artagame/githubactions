@@ -1,0 +1,55 @@
+name: release-solution
+
+on:
+  workflow_call :
+    inputs:
+      # Change this value
+      solution_name:
+        description: 'name of the solution to worked on from Power Platform'
+        required: true
+        default: ALMLab
+      #Do Not change these values
+      solution_release_folder:
+       description: 'folder where the released binaries are going to be hosted *do not change*'
+       required: true
+       default: out/release
+    secrets:
+      ENVIRONMENT_URL:
+        description: 'sit env url'
+        required: true
+        default: testurl
+      CLIENT_ID:
+        description: 'client id'
+        required: true
+        default: clientid
+      TENANT_ID: 
+        description: 'tenant id'
+        required: true
+        default: tenantid
+      ClIENT_SECRET:
+        description: 'client secret'
+        required: true
+        default: clientsecret
+
+jobs:
+  release:
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        lfs: true
+
+    - name: Fetch the ready to ship solution from GH artifact store
+      uses: actions/download-artifact@v2
+      with:
+        name: managedSolutions
+        path: ${{ inputs.solution_release_folder}}
+    - name: Import solution to prod env
+      uses: microsoft/powerplatform-actions/import-solution@v0
+      with:
+        environment-url: ${{ secrets.ENVIRONMENT_URL }}
+        app-id: ${{ secrets.CLIENT_ID }}
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        tenant-id: ${{ secrets.TENANT_ID }}
+        solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}.zip
+        force-overwrite: true
+        publish-changes: true

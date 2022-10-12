@@ -58,26 +58,42 @@ on:
 
 jobs:
   build:
-      uses: artagame/githubactions/.github/workflows/export-and-branch-solution-with-spn-auth.yml@main
-      with:
-        solution_name:  ${{ github.event.inputs.solution_name }}
-        ENVIRONMENT_URL:  ${{ secrets.BUILD_ENVIRONMENT_URL }}
-        CLIENT_ID:  ${{ env.CLIENT_ID }}
-        TENANT_ID: ${{ env.TENANT_ID }}
-        solution_exported_folder: ${{ github.event.inputs.solution_exported_folder }}
-        solution_folder: ${{ github.event.inputs.solution_folder }}
-        solution_target_folder: ${{ github.event.inputs.solution_target_folder }}
+    uses: artagame/githubactions/.github/workflows/build@main
+    with:
+      solution_name:  ${{ github.event.inputs.solution_name }}
+      solution_exported_folder: ${{ github.event.inputs.solution_exported_folder }}
+      solution_folder: ${{ github.event.inputs.solution_folder }}
+      solution_target_folder: ${{ github.event.inputs.solution_target_folder }}
+    secrets:
+      ENVIRONMENT_URL: ${{ secrets.BUILD_ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.BUILD_CLIENT_ID }}
+      TENANT_ID: ${{ secrets.BUILD_TENANT_ID }}
+      ClIENT_SECRET: ${{ secrets.BUILD_ClIENT_SECRET }}
+    
 
   release:
-      needs: [ build ]
-      uses: artagame/githubactions/.github/workflows/release-solution-to-prod-with-spn-auth.yml@main
-      with:
-        solution_name:  ${{ github.event.inputs.solution_name }}
-        BUILD_ENVIRONMENT_URL:  ${{ secrets.BUILD_ENVIRONMENT_URL }}
-        PRODUCTION_ENVIRONMENT_URL:  ${{ secrets.PRODUCTION_ENVIRONMENT_URL }}
-        CLIENT_ID:   ${{ secrets.CLIENT_ID }}
-        TENANT_ID: ${{ secrets.TENANT_ID }}
-        solution_shipping_folder: ${{ github.event.inputs.solution_shipping_folder }}
-        solution_outbound_folder: ${{ github.event.inputs.solution_outbound_folder }}
-        solution_source_folder: ${{ github.event.inputs.solution_source_folder }}
-        solution_release_folder: ${{ github.event.inputs.solution_release_folder }}
+    needs: [ build ]
+    uses: artagame/githubactions/.github/workflows/release.yml@main
+    with:
+      solution_name:  ${{ github.event.inputs.solution_name }}
+      solution_shipping_folder: ${{ github.event.inputs.solution_shipping_folder }}
+      solution_outbound_folder: ${{ github.event.inputs.solution_outbound_folder }}
+      solution_source_folder: ${{ github.event.inputs.solution_source_folder }}
+      solution_release_folder: ${{ github.event.inputs.solution_release_folder }}
+    secrets:
+      BUILD_ENVIRONMENT_URL: ${{ secrets.BUILD_ENVIRONMENT_URL }}
+      BUILD_CLIENT_ID: ${{ secrets.BUILD_CLIENT_ID }}
+      BUILD_TENANT_ID: ${{ secrets.BUILD_TENANT_ID }}
+      BUILD_ClIENT_SECRET: ${{ secrets.BUILD_ClIENT_SECRET }}
+      SIT_ENVIRONMENT_URL: ${{ secrets.SIT_ENVIRONMENT_URL }}
+      SIT_CLIENT_ID: ${{ secrets.SIT_CLIENT_ID }}
+      SIT_TENANT_ID: ${{ secrets.SIT_TENANT_ID }}
+      SIT_ClIENT_SECRET: ${{ secrets.SIT_ClIENT_SECRET }}
+      UAT_ENVIRONMENT_URL: ${{ secrets.UAT_ENVIRONMENT_URL }}
+      UAT_CLIENT_ID: ${{ secrets.UAT_CLIENT_ID }}
+      UAT_TENANT_ID: ${{ secrets.UAT_TENANT_ID }}
+      UAT_ClIENT_SECRET: ${{ secrets.UAT_ClIENT_SECRET }}
+      PROD_ENVIRONMENT_URL: ${{ secrets.PROD_ENVIRONMENT_URL }}
+      PROD_CLIENT_ID: ${{ secrets.PROD_CLIENT_ID }}
+      PROD_TENANT_ID: ${{ secrets.PROD_TENANT_ID }}
+      PROD_ClIENT_SECRET: ${{ secrets.PROD_ClIENT_SECRET }}
