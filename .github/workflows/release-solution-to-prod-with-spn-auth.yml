@@ -102,7 +102,7 @@ jobs:
         name: managedSolutions
         path: ${{ github.event.inputs.solution_shipping_folder}}/${{ github.event.inputs.solution_name }}.zip
 
-  release-to-sit:
+  sit:
     needs: [ convert-to-managed ]
     runs-on: windows-latest
     env:
@@ -129,7 +129,7 @@ jobs:
         force-overwrite: true
         publish-changes: true
 
-  release-to-staging:
+  uat:
     needs: [ release-to-sit ]
     runs-on: windows-latest
     env:
@@ -156,7 +156,7 @@ jobs:
         force-overwrite: true
         publish-changes: true
 
-  release-to-prod:
+  prod:
     needs: [ release-to-staging ]
     runs-on: windows-latest
     env:
