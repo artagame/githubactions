@@ -41,7 +41,7 @@ jobs:
         env:
           test: ${{ secrets.ENVIRONMENT_URL }}
         run: |
-          echo ${{ secrets.ENVIRONMENT_URL }}
+          echo $test
           echo ${{ secrets.GITHUB_TOKEN }}
       
       - name: who-am-i action
