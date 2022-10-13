@@ -91,8 +91,8 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: managedSolutions
-        path: ${{ inputs.solution_shipping_folder}}${{ inputs.solution_name }}.zip
-      working-directory: ./githubactions
+        path: ./${{ inputs.solution_shipping_folder}}${{ inputs.solution_name }}.zip
+      
 
   sit:
     needs: [ convert-to-managed ]
