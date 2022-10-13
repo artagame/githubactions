@@ -33,6 +33,15 @@ on:
        required: true
        default: out/release
        type: string
+    secrets:
+      ENVIRONMENT_URL:
+          required: true
+      CLIENT_ID:
+          required: true          
+      TENANT_ID:
+          required: true
+      CLIENT_SECRET:
+          required: true          
 
   release:
     types: [created]

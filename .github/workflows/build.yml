@@ -30,7 +30,14 @@ on:
     secrets:
       ENVIRONMENT_URL:
           required: true
-        
+      CLIENT_ID:
+          required: true          
+      TENANT_ID:
+          required: true
+      CLIENT_SECRET:
+          required: true          
+          
+
 jobs:
   export-from-dev:
     environment: dev    
@@ -39,19 +46,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          echo ${{ secrets.CLIENT_ID }} | sed -e 's/\(.\)/\1 /g'
-          echo ${{ secrets.ENVIRONMENT_URL }} | sed -e 's/\(.\)/\1 /g'
-          echo ${{ secrets.GITHUB_TOKEN }} | sed -e 's/\(.\)/\1 /g'
-      
       - name: who-am-i action
         uses: microsoft/powerplatform-actions/who-am-i@v0
         with:
           environment-url: ${{ secrets.ENVIRONMENT_URL }}
           app-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.TENANT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
 
       - name: export-solution action
@@ -59,7 +59,7 @@ jobs:
         with:
           environment-url: ${{ secrets.ENVIRONMENT_URL }}
           app-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.TENANT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
           solution-name: ${{ github.event.inputs.solution_name }}
           solution-output-file: ${{ github.event.inputs.solution_exported_folder}}/${{ github.event.inputs.solution_name }}.zip
