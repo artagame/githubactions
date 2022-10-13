@@ -27,6 +27,9 @@ on:
        required: true
        default: solutions/
        type: string
+    secrets:
+      ENVIRONMENT_URL:
+          required: true
         
 jobs:
   export-from-dev:

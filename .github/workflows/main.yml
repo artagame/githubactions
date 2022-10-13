@@ -22,6 +22,8 @@ jobs:
       solution_exported_folder: out/exported/
       solution_folder: out/solutions/
       solution_target_folder: solutions/
+    secrets: 
+      ENVIRONMENT_URL: ${{ secrets.ENVIRONMENT_URL }}
     
     
 
