@@ -39,7 +39,6 @@ on:
           required: true
       CLIENT_SECRET:
           required: true          
-          
 
 jobs:
   export-from-dev:
