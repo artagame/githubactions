@@ -40,7 +40,9 @@ jobs:
       - name: Run a one-line script
         env:
           test: ${{ secrets.ENVIRONMENT_URL }}
-        run: echo ${{env.test}}
+        run: |
+          echo ${{ secrets.ENVIRONMENT_URL }}
+          echo ${{ secrets.GITHUB_TOKEN }}
       
       - name: who-am-i action
         uses: microsoft/powerplatform-actions/who-am-i@v0
