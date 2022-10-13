@@ -30,7 +30,7 @@ on:
         
 jobs:
   export-from-dev:
-    environment: dev    
+    environment: uat    
     runs-on: ubuntu-latest
     # or you can say runs-on: ubuntu-latest
     steps:

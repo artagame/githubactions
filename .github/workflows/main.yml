@@ -16,7 +16,6 @@ on:
 
 jobs:
   build:
-    environment: dev
     uses: artagame/githubactions/.github/workflows/build.yml@main
     with:
       solution_name:  ALMLab
