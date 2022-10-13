@@ -71,6 +71,10 @@ jobs:
           solution-type: 'Unmanaged'
           overwrite-files: true
 
+      - name: Set default branch.
+        run: git remote set-head origin --auto
+        shell: bash
+        
       - name: branch-solution, prepare it for a PullRequest
         uses: microsoft/powerplatform-actions/branch-solution@v0
         with:
