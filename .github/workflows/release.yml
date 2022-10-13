@@ -60,7 +60,7 @@ jobs:
     - uses: actions/checkout@v3
       with:
         lfs: true
-        ref: 
+        ref: ${{ inputs.branch_name }}
 
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v0
