@@ -24,6 +24,9 @@ jobs:
       solution_target_folder: solutions/
     secrets: 
       ENVIRONMENT_URL: ${{ secrets.ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      TENANT_ID: ${{ secrets.TENANT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
     
     
 
@@ -36,3 +39,8 @@ jobs:
       solution_outbound_folder: out/solutions/
       solution_source_folder: solutions/
       solution_release_folder: out/release
+    secrets: 
+      ENVIRONMENT_URL: ${{ secrets.ENVIRONMENT_URL }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      TENANT_ID: ${{ secrets.TENANT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
