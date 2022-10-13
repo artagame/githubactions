@@ -22,6 +22,7 @@ jobs:
       solution_exported_folder: out/exported/
       solution_folder: out/solutions/
       solution_target_folder: solutions/
+    environment: dev
     
 
   release:
