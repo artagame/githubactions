@@ -11,6 +11,10 @@ on:
         description: 'name of the solution to worked on from Power Platform'
         required: true
         type: string
+      branch_name:
+        description: 'name of the branch created'
+        required: true
+        type: string
       #Do Not change these values
       solution_shipping_folder:
         description: 'folder name for staging the exported solution *do not change*'
@@ -53,9 +57,10 @@ jobs:
     env:
       RUNNER_DEBUG: 1
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         lfs: true
+        ref: 
 
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v0
