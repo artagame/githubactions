@@ -80,6 +80,6 @@ jobs:
         with:
           solution-folder: ${{ inputs.solution_folder}}/${{ inputs.solution_name }}
           solution-target-folder: ${{ inputs.solution_target_folder}}/${{ inputs.solution_name }}
-          repo-url: origin main
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-empty-commit: true
+          branch-name: forpullrequest
