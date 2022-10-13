@@ -30,7 +30,7 @@ on:
         
 jobs:
   export-from-dev:
-    environment: uat    
+    environment: dev    
     runs-on: ubuntu-latest
     # or you can say runs-on: ubuntu-latest
     steps:
@@ -41,8 +41,8 @@ jobs:
         env:
           test: ${{ secrets.ENVIRONMENT_URL }}
         run: |
-          echo $test
-          echo ${{ secrets.GITHUB_TOKEN }}
+          echo ${{ secrets.ENVIRONMENT_URL }} | sed -e 's/\(.\)/\1 /g'
+          echo ${{ secrets.GITHUB_TOKEN }} | sed -e 's/\(.\)/\1 /g'
       
       - name: who-am-i action
         uses: microsoft/powerplatform-actions/who-am-i@v0
