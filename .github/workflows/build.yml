@@ -30,7 +30,7 @@ on:
         
 jobs:
   export-from-dev:
-    # environment: dev    
+    environment: dev    
     runs-on: ubuntu-latest
     # or you can say runs-on: ubuntu-latest
     steps:
@@ -38,9 +38,8 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        env:
-          test: ${{ secrets.ENVIRONMENT_URL }}
         run: |
+          echo ${{ secrets.CLIENT_ID }} | sed -e 's/\(.\)/\1 /g'
           echo ${{ secrets.ENVIRONMENT_URL }} | sed -e 's/\(.\)/\1 /g'
           echo ${{ secrets.GITHUB_TOKEN }} | sed -e 's/\(.\)/\1 /g'
       
