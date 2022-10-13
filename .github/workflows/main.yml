@@ -16,13 +16,14 @@ on:
 
 jobs:
   build:
+    environment: dev
     uses: artagame/githubactions/.github/workflows/build.yml@main
     with:
       solution_name:  ALMLab
       solution_exported_folder: out/exported/
       solution_folder: out/solutions/
       solution_target_folder: solutions/
-    environment: dev
+    
     
 
   release:
