@@ -77,7 +77,6 @@ jobs:
           solution-type: 'Unmanaged'
           overwrite-files: true
 
-
       - name: branch-solution, prepare it for a PullRequest
         uses: microsoft/powerplatform-actions/branch-solution@v0
         with:
@@ -86,3 +85,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-empty-commit: true
           branch-name:  ${{ inputs.branch_name }}
+          
+      - name: create pull request
+        run: gh pr create -B develop -H branch_to_merge --title 'Merge ${{ inputs.branch_name }}  into develop' --body 'Created by Github action'
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
