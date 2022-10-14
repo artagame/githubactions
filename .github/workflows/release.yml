@@ -121,7 +121,7 @@ jobs:
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
         publish-changes: true
-        skip-dependency-check: true
+        skip-dependency-check: true #Please comment out if not running in a sample environment
 
   uat:
     needs: [ sit ]
