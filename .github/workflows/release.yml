@@ -53,11 +53,11 @@ jobs:
     env:
       RUNNER_DEBUG: 1
     steps:
+
     - uses: actions/checkout@v2
       with:
         lfs: true
-        ref: develop
-
+        
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v0
       with:

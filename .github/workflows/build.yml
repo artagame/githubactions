@@ -77,6 +77,10 @@ jobs:
           solution-type: 'Unmanaged'
           overwrite-files: true
 
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v6
+
       - name: branch-solution, prepare it for a PullRequest
         uses: microsoft/powerplatform-actions/branch-solution@v0
         with:
@@ -84,16 +88,17 @@ jobs:
           solution-target-folder: ${{ inputs.solution_target_folder}}/${{ inputs.solution_name }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-empty-commit: true
-          branch-name:  ${{ inputs.branch_name }}
+          branch-name:  ${{ steps.branch-name.outputs.current_branch }}
+          clobber-branch: true
 
-      - name: Commit report
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -am "Automated commit for run ${{ github.run_id }}"
-          git push --force
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Commit report
+      #   run: |
+      #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
+      #     git config --local user.name "github-actions[bot]"
+      #     git commit -am "Automated commit for run ${{ github.run_id }}"
+      #     git push --force
+      #   env:
+      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # - name: create pull request
       #   run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
       #   env:
