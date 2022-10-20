@@ -90,16 +90,10 @@ jobs:
           allow-empty-commit: true
           branch-name:  ${{ steps.branch-name.outputs.current_branch }}
           clobber-branch: true
+        if: ${{ github.ref != 'refs/heads/main' }} 
 
-      # - name: Commit report
-      #   run: |
-      #     git config --local user.email "github-actions[bot]@users.noreply.github.com"
-      #     git config --local user.name "github-actions[bot]"
-      #     git commit -am "Automated commit for run ${{ github.run_id }}"
-      #     git push --force
-      #   env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - name: create pull request
-      #   run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
-      #   env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: create pull request
+        run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.ref == 'refs/heads/main' }} 
