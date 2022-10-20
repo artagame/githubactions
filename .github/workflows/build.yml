@@ -92,8 +92,20 @@ jobs:
           clobber-branch: true
         if: ${{ github.ref != 'refs/heads/main' }} 
 
-      - name: create pull request
-        run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: branch-solution, prepare it for a PullRequest
+        uses: microsoft/powerplatform-actions/branch-solution@v0
+        with:
+          solution-folder: ${{ inputs.solution_folder}}/${{ inputs.solution_name }}
+          solution-target-folder: ${{ inputs.solution_target_folder}}/${{ inputs.solution_name }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          allow-empty-commit: true
+          branch-name:  develop
+          clobber-branch: true
         if: ${{ github.ref == 'refs/heads/main' }} 
+
+        
+      # - name: create pull request
+      #   run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
+      #   env:
+      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   if: ${{ github.ref == 'refs/heads/main' }} 
