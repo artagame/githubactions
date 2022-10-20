@@ -85,8 +85,14 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           allow-empty-commit: true
           branch-name:  ${{ inputs.branch_name }}
-          
-      - name: create pull request
-        run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
+
+      - name: Commit report
+        run: |
+          git commit -am "Automated commit for run ${{ github.run_id }}"
+          git push --force
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: create pull request
+      #   run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
+      #   env:
+      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
