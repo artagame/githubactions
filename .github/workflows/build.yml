@@ -77,6 +77,7 @@ jobs:
           client-secret: ${{ secrets.CLIENT_SECRET }}
           tenant-id: ${{ secrets.TENANT_ID }}
           path: ${{ inputs.solution_exported_folder}}/${{ inputs.solution_name }}.zip
+          checker-logs-artifact-name: logs
           
       - name: unpack-solution action
         uses: microsoft/powerplatform-actions/unpack-solution@v0
@@ -112,9 +113,14 @@ jobs:
           clobber-branch: true
         if: ${{ github.ref == 'refs/heads/main' }} 
 
-        
-      # - name: create pull request
-      #   run: gh pr create -B develop -H ${{ inputs.branch_name }} --title 'Merge ${{ inputs.branch_name }} into develop' --body 'Created by Github action'
-      #   env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   if: ${{ github.ref == 'refs/heads/main' }} 
+      - name: logs push to branch
+        run: |
+          gh add logs
+          git commit
+          git push
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Display structure of downloaded files
+        run: ls -R
