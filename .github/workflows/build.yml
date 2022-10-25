@@ -115,6 +115,11 @@ jobs:
 
       - name: logs push to branch
         run: |
+          git --version
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git fetch --no-tags --prune --depth=1 origin
+          
           gh add logs
           git commit
           git push
